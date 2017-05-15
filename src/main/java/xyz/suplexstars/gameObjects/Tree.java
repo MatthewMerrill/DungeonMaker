@@ -1,4 +1,4 @@
-package xyz.suplexstars;
+package xyz.suplexstars.gameObject;
 
 /**
  * Created by merrillm on 5/12/17.
