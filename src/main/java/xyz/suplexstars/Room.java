@@ -1,5 +1,7 @@
 package xyz.suplexstars;
 
+import java.util.ArrayList;
+
 /**
  * Created by merrillm on 5/12/17.
  */
@@ -8,11 +10,18 @@ public class Room {
     public int width;
     public int height;
     
-    public DungeonObject[][] tiles;
+    public ArrayList<DungeonObject>[][] tiles;
     
     public int[][] occupyingTile;
     
     private static final int[][] rotationAccess = { { 1, 1 }, { 0, 1 }, { 1, -1}, { 0, -1 } };
+    
+    public Room(int width, int height) {
+        this.width = width;
+        this.height = height;
+        
+        occupyingTile = new int[height][width];
+    }
     
     public boolean add(DungeonObject dObj, int r, int c) {
         
@@ -37,8 +46,8 @@ public class Room {
     }
     
     public void remove(int r, int c) {
-        if (tiles[r][c] != null)
-            remove(tiles[r][c]);
+        if (!tiles[r][c].isEmpty())
+            remove(tiles[r][c].get(0));
     }
     
     public void remove(DungeonObject dObj) {
