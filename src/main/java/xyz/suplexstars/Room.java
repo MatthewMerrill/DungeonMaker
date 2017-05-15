@@ -8,13 +8,13 @@ public class Room {
     public int width;
     public int height;
     
-    public DungeonObject[][] tiles;
-    
+    public DungeonObject[][] objects;
+    public FloorObject[][] tiles
     public int[][] occupyingTile;
     
     private static final int[][] rotationAccess = { { 1, 1 }, { 0, 1 }, { 1, -1}, { 0, -1 } };
     
-    public boolean add(DungeonObject dObj, int r, int c) {
+    public boolean addObject(DungeonObject dObj, int r, int c) {
         
         int rotation = dObj.getRotation();
         int[] xRotationAccessor = rotationAccess[rotation];
@@ -37,8 +37,8 @@ public class Room {
     }
     
     public void remove(int r, int c) {
-        if (tiles[r][c] != null)
-            remove(tiles[r][c]);
+        if (objects[r][c] != null)
+            remove(objects[r][c]);
     }
     
     public void remove(DungeonObject dObj) {
