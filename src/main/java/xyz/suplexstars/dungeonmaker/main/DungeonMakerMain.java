@@ -1,7 +1,10 @@
+package xyz.suplexstars.dungeonmaker.main;
+
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
+import xyz.suplexstars.dungeonmaker.DungeonMaker;
 
 import java.nio.*;
 

@@ -1,10 +1,7 @@
-import xyz.suplexstars.Room;
-import xyz.suplexstars.RoomView;
-import xyz.suplexstars.View;
+package xyz.suplexstars.dungeonmaker;
 
-import static org.lwjgl.glfw.Callbacks.*;
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
+import xyz.suplexstars.dungeonmaker.view.RoomView;
+import xyz.suplexstars.dungeonmaker.view.View;
 
 /**
  * Created by merrillm on 5/12/17.

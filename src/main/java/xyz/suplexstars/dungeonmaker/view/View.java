@@ -1,4 +1,4 @@
-package xyz.suplexstars;
+package xyz.suplexstars.dungeonmaker.view;
 
 /**
  * Created by merrillm on 5/13/17.

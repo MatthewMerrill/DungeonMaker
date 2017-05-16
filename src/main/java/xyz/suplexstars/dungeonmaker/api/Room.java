@@ -1,24 +1,34 @@
-package xyz.suplexstars;
+package xyz.suplexstars.dungeonmaker.api;
+
+import xyz.suplexstars.dungeonmaker.api.*;
 
 import java.util.ArrayList;
 
 /**
- * Created by merrillm on 5/12/17.
+ * @author matthewmerrill brandondsherman
+ * Copyright 2017
  */
 public class Room {
     
     public int width;
     public int height;
     
-    public DungeonObject[][] objects;
-    public FloorObject[][] tiles
+    public ArrayList<DungeonObject>[][] objects;
+    public FloorObject[][] tiles;
     public int[][] occupyingTile;
     
     private static final int[][] rotationAccess = { { 1, 1 }, { 0, 1 }, { 1, -1}, { 0, -1 } };
     
+    @SuppressWarnings("unchecked")
     public Room(int width, int height) {
         this.width = width;
         this.height = height;
+        
+        objects = (ArrayList<DungeonObject>[][]) new ArrayList[height][width];
+        
+        for (int r = 0; r < height; r++)
+            for (int c = 0; c < width; c++)
+                objects[r][c] = new ArrayList<>();
         
         occupyingTile = new int[height][width];
     }
@@ -36,6 +46,7 @@ public class Room {
                     c + yRotationAccessor[1] * offset[yRotationAccessor[0]],
             };
             
+            objects[rotated[0]][rotated[1]].add(dObj);
             if ((occupyingTile[rotated[0]][rotated[1]] += 1) >= 2)
                 collision = true;
         }
@@ -45,14 +56,14 @@ public class Room {
     }
     
     public void remove(int r, int c) {
-        if (objects[r][c] != null)
-            remove(objects[r][c]);
+        if (!objects[r][c].isEmpty())
+            remove(objects[r][c].get(0));
     }
     
     public void remove(DungeonObject dObj) {
         int r = dObj.getRow(), c = dObj.getColumn();
-        ObjectBounds bounds = dObj.getBounds();
-    
+        xyz.suplexstars.dungeonmaker.api.ObjectBounds bounds = dObj.getBounds();
+        
         int rotation = dObj.getRotation();
         int[] xRotationAccessor = rotationAccess[rotation];
         int[] yRotationAccessor = rotationAccess[(rotation+1)%4];
@@ -63,6 +74,7 @@ public class Room {
                     c + yRotationAccessor[1] * offset[yRotationAccessor[0]],
             };
             
+            objects[rotated[0]][rotated[1]].remove(dObj);
             if ((occupyingTile[rotated[0]][rotated[1]] -= 1) < 0)
                 System.err.println("Something's not right! A tile has decremented past 0!");
         }

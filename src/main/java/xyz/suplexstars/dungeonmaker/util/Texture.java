@@ -1,4 +1,4 @@
-package xyz.suplexstars;
+package xyz.suplexstars.dungeonmaker.util;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 

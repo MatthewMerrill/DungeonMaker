@@ -1,4 +1,4 @@
-package xyz.suplexstars;
+package xyz.suplexstars.dungeonmaker.api;
 
 import java.util.UUID;
 
