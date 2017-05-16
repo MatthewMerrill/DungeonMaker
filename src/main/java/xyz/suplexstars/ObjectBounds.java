@@ -45,7 +45,7 @@ public class ObjectBounds implements Iterable<int[]> {
     }
     
     public static ObjectBounds rectangle(int width, int height) {
-        int[][] arr = new int[2][width * height];
+        int[][] arr = new int[width * height][2];
         
         int i = 0;
         for (int r = 0; r < height; r++) {

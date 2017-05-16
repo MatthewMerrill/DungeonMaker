@@ -1,5 +1,7 @@
 package xyz.suplexstars;
 
+import java.util.ArrayList;
+
 /**
  * Created by merrillm on 5/12/17.
  */
@@ -14,8 +16,14 @@ public class Room {
     
     private static final int[][] rotationAccess = { { 1, 1 }, { 0, 1 }, { 1, -1}, { 0, -1 } };
     
-    public boolean addObject(DungeonObject dObj, int r, int c) {
+    public Room(int width, int height) {
+        this.width = width;
+        this.height = height;
         
+        occupyingTile = new int[height][width];
+    }
+    
+    public boolean addObject(DungeonObject dObj, int r, int c) {
         int rotation = dObj.getRotation();
         int[] xRotationAccessor = rotationAccess[rotation];
         int[] yRotationAccessor = rotationAccess[(rotation+1)%4];
