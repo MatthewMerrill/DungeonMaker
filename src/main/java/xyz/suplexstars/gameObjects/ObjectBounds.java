@@ -1,4 +1,4 @@
-package xyz.suplexstars;
+package xyz.suplexstars.gameObject;
 
 import java.util.Arrays;
 import java.util.Iterator;
