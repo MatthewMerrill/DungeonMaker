@@ -18,6 +18,7 @@ public class DungeonMakerMain {
     
     // The window handle
     private long window;
+    private DungeonMaker dungeonMaker;
     
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -46,7 +47,8 @@ public class DungeonMakerMain {
         // Configure GLFW
         glfwDefaultWindowHints(); // optional, the current window hints are already the default
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will be resizable
+        glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
         
         // Create the window
         window = glfwCreateWindow(300, 300, "Hello World!", NULL, NULL);
@@ -94,20 +96,38 @@ public class DungeonMakerMain {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+    
+        glDisable(GL_DEPTH_TEST);
         
         // Set the clear color
         glClearColor(1.0f, 105/255f, 180/255f, 0.0f);
         
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW);
+        
+        this.dungeonMaker = new DungeonMaker();
+        
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(window) ) {
+            glfwSwapBuffers(window); // swap the color buffers
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
             
-            glfwSwapBuffers(window); // swap the color buffers
+            IntBuffer w = IntBuffer.allocate(1), h = IntBuffer.allocate(1);
+            glfwGetWindowSize(window, w, h);
+    
+    
+            glPushMatrix();
+            glOrtho(0, 200, 200, 0, 1, -1);
+//            glViewport(0, 0, 25, 25);
             
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
+            dungeonMaker.tick();
+            dungeonMaker.render();
+            glPopMatrix();
         }
     }
     
