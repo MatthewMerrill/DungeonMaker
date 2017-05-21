@@ -7,7 +7,6 @@ import xyz.suplexstars.dungeonmaker.impl.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * Created by merrillm on 5/13/17.
  * It's like a room with a view, but rather a view with a room.
  */
 public class RoomView extends View {
@@ -19,36 +18,32 @@ public class RoomView extends View {
         room.addObject(new Tree(), 0, 0);
         room.addObject(new Tree(), 2, 1);
         room.addObject(new Tree(), 6, 6);
+        room.addObject(new Door(), 0, 3);
+        
+        Door doorA = new Door(), doorB = new Door();
+        room.addObject(doorA, 1, 4);
+        room.addObject(doorB, 1, 5);
+        
+        doorA.addListener(doorB);
+        doorA.setActive(true);
     }
     
     @Override
     public void render() {
         glPushMatrix();
-        glTranslated(20, 0, 0);
         glScaled(2d, 2d, 1d);
-        
     
-        glBegin(GL_QUADS);
+        for (int r = 0; r < room.height; r++)
+            for (int c = 0; c < room.width; c++)
+                room.tiles[r][c].render();
+        
         for (int r = 0; r < room.height; r++) {
             for (int c = 0; c < room.width; c++) {
-    
                 for (DungeonObject obj : room.objects[r][c]) {
-                    glBindTexture(GL_TEXTURE_2D, obj.getTexture().textureId);
-                    float[] texCoord = obj.getTextureCoords();
-    
-                    glTexCoord2d(texCoord[0], texCoord[1]);
-                    glVertex2d(c * 10, r * 10);
-                    glTexCoord2d(texCoord[2], texCoord[1]);
-                    glVertex2d(c * 10 + 10, r * 10);
-                    glTexCoord2d(texCoord[2], texCoord[3]);
-                    glVertex2d(c * 10 + 10, r * 10 + 10);
-                    glTexCoord2d(texCoord[0], texCoord[3]);
-                    glVertex2d(c * 10, r * 10 + 10);
+                    obj.render();
                 }
             }
         }
-        glEnd();
-        
         glPopMatrix();
     }
     

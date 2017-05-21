@@ -1,31 +1,12 @@
 package xyz.suplexstars.dungeonmaker.api;
 
-import xyz.suplexstars.dungeonmaker.util.Texture;
-
-/**
- * Created by merrillm on 5/12/17.
- */
-public abstract class DungeonObject {
+public abstract class DungeonObject extends EventNode implements IRenderable {
     
     private int r;
     private int c;
     private int rotation;
     
-    private final Texture texture;
-    
-    public DungeonObject() {
-        this.texture = Texture.loadTexture(textureName());
-    }
-    
     public abstract ObjectBounds getBounds();
-    protected abstract String textureName();
-    
-    public Texture getTexture() {
-        return texture;
-    }
-    public float[] getTextureCoords() {
-        return new float[]{ 0f, 0f, 1f, 1f };
-    }
     
     public int getRotation() {
         return rotation;
@@ -37,6 +18,9 @@ public abstract class DungeonObject {
         return c;
     }
     
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
+    }
     public void setRow(int r) {
         this.r = r;
     }
@@ -47,4 +31,13 @@ public abstract class DungeonObject {
         setRow(r);
         setColumn(c);
     }
+    
+    public int getWidth() {
+        return getBounds().getWidth();
+    }
+    public int getHeight() {
+        return getBounds().getHeight();
+    }
+    
+    
 }

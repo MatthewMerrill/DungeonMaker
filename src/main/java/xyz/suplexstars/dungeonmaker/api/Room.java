@@ -1,6 +1,6 @@
 package xyz.suplexstars.dungeonmaker.api;
 
-import xyz.suplexstars.dungeonmaker.api.*;
+import xyz.suplexstars.dungeonmaker.impl.GrassTile;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Room {
     public int height;
     
     public ArrayList<DungeonObject>[][] objects;
-    public FloorObject[][] tiles;
+    public FloorTile[][] tiles;
     public int[][] occupyingTile;
     
     private static final int[][] rotationAccess = { { 1, 1 }, { 0, 1 }, { 1, -1}, { 0, -1 } };
@@ -24,11 +24,15 @@ public class Room {
         this.width = width;
         this.height = height;
         
+        tiles = new FloorTile[height][width];
         objects = (ArrayList<DungeonObject>[][]) new ArrayList[height][width];
         
-        for (int r = 0; r < height; r++)
-            for (int c = 0; c < width; c++)
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+                tiles[r][c] = new GrassTile(r, c);
                 objects[r][c] = new ArrayList<>();
+            }
+        }
         
         occupyingTile = new int[height][width];
     }
@@ -62,7 +66,6 @@ public class Room {
     
     public void remove(DungeonObject dObj) {
         int r = dObj.getRow(), c = dObj.getColumn();
-        xyz.suplexstars.dungeonmaker.api.ObjectBounds bounds = dObj.getBounds();
         
         int rotation = dObj.getRotation();
         int[] xRotationAccessor = rotationAccess[rotation];
