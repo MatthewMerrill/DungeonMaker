@@ -125,7 +125,7 @@ public class DungeonMakerMain {
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
-            dungeonMaker.tick();
+            dungeonMaker.tick(1);
             dungeonMaker.render();
             glPopMatrix();
         }

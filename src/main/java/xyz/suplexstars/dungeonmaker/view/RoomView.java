@@ -1,8 +1,10 @@
 package xyz.suplexstars.dungeonmaker.view;
 
 import xyz.suplexstars.dungeonmaker.api.DungeonObject;
+import xyz.suplexstars.dungeonmaker.api.Entity;
 import xyz.suplexstars.dungeonmaker.api.Room;
 import xyz.suplexstars.dungeonmaker.impl.*;
+import xyz.suplexstars.dungeonmaker.util.Location;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -23,9 +25,15 @@ public class RoomView extends View {
         Door doorA = new Door(), doorB = new Door();
         room.addObject(doorA, 1, 4);
         room.addObject(doorB, 1, 5);
-        
         doorA.addListener(doorB);
         doorA.setActive(true);
+    
+        room.entities.add(new EntityBrute(new Location(4, 4)));
+    }
+    
+    @Override
+    public void tick(long delta) {
+        room.tick(delta);
     }
     
     @Override
@@ -44,6 +52,10 @@ public class RoomView extends View {
                 }
             }
         }
+        
+        for (Entity entity : room.entities)
+            entity.render();
+        
         glPopMatrix();
     }
     

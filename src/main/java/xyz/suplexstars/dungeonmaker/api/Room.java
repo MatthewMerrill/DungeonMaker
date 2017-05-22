@@ -8,11 +8,12 @@ import java.util.ArrayList;
  * @author matthewmerrill brandondsherman
  * Copyright 2017
  */
-public class Room {
+public class Room implements ITickable {
     
     public int width;
     public int height;
     
+    public ArrayList<Entity> entities;
     public ArrayList<DungeonObject>[][] objects;
     public FloorTile[][] tiles;
     public int[][] occupyingTile;
@@ -24,6 +25,7 @@ public class Room {
         this.width = width;
         this.height = height;
         
+        entities = new ArrayList<>();
         tiles = new FloorTile[height][width];
         objects = (ArrayList<DungeonObject>[][]) new ArrayList[height][width];
         
@@ -81,5 +83,10 @@ public class Room {
             if ((occupyingTile[rotated[0]][rotated[1]] -= 1) < 0)
                 System.err.println("Something's not right! A tile has decremented past 0!");
         }
+    }
+    
+    @Override
+    public void tick(final long delta) {
+        entities.forEach(e -> e.tick(delta));
     }
 }
