@@ -34,11 +34,16 @@ public interface DirectionalRenderable extends IRenderable {
         int N;
         
         rotation %= 2 * Math.PI;
+        rotation += 2 * Math.PI;
+        rotation %= 2 * Math.PI;
+        
         rotation /= 2*Math.PI;
         
         if (centerOriginRegion())
             rotation += 1/(2f*L);
         N = (int) (L * rotation);
+        N %= L;
+        N += L;
         N %= L;
         
         return new float[]{ (N+0f)/L, 0, (N+1f)/L, 1};
@@ -62,13 +67,13 @@ public interface DirectionalRenderable extends IRenderable {
         glBegin(GL_QUADS);
         //noinspection Duplicates
         {
-            glTexCoord2d(coords[0], coords[1]);
-            glVertex2d(c, r);
-            glTexCoord2d(coords[2], coords[1]);
-            glVertex2d(c + w, r);
-            glTexCoord2d(coords[2], coords[3]);
-            glVertex2d(c + w, r + h);
             glTexCoord2d(coords[0], coords[3]);
+            glVertex2d(c, r);
+            glTexCoord2d(coords[2], coords[3]);
+            glVertex2d(c + w, r);
+            glTexCoord2d(coords[2], coords[1]);
+            glVertex2d(c + w, r + h);
+            glTexCoord2d(coords[0], coords[1]);
             glVertex2d(c, r + h);
         }
         glEnd();

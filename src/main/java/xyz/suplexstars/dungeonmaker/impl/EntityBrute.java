@@ -16,12 +16,12 @@ public class EntityBrute extends Entity implements DirectionalRenderable {
     }
     @Override
     public int getSpriteCount() {
-        return 4;
+        return 8;
     }
     
     public void tick(long delta) {
-        setRotation(getRotation() + .01);
-        System.out.println(Math.toDegrees(getRotation()));
+        setRotation((getRotation() + .01) % (2*Math.PI));
+//        System.out.println(Math.toDegrees(getRotation()));
     }
     
     @Override

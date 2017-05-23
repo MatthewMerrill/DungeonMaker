@@ -1,8 +1,11 @@
 package xyz.suplexstars.dungeonmaker.api;
 
 import xyz.suplexstars.dungeonmaker.impl.GrassTile;
+import xyz.suplexstars.dungeonmaker.impl.TileTile;
+import xyz.suplexstars.dungeonmaker.util.BoundingBox;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /**
  * @author matthewmerrill brandondsherman
@@ -31,7 +34,7 @@ public class Room implements ITickable {
         
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
-                tiles[r][c] = new GrassTile(r, c);
+                tiles[r][c] = new TileTile(r, c);
                 objects[r][c] = new ArrayList<>();
             }
         }
@@ -87,6 +90,46 @@ public class Room implements ITickable {
     
     @Override
     public void tick(final long delta) {
+        
+        entities.forEach(e -> IntStream.range(0, width)
+                .forEach(c -> IntStream.range(0, height)
+                .forEach(r -> objects[r][c]
+                .forEach(o -> {
+                    BoundingBox ebb = new BoundingBox(
+                            e.getRow(),
+                            e.getColumn(),
+                            e.getRow() + e.getHeight(),
+                            e.getColumn() + e.getWidth());
+                    BoundingBox obb = new BoundingBox(
+                            o.getRow(),
+                            o.getColumn(),
+                            o.getRow() + o.getHeight(),
+                            o.getColumn() + o.getWidth());
+                    
+                    if (ebb.collidesWith(obb))
+                        System.out.println("oh bb a collision");
+                }))));
+    
+    
+        entities.forEach(e -> entities
+                .forEach(o -> {
+                    if (e == o) return;
+                    
+                    BoundingBox ebb = new BoundingBox(
+                            e.getRow(),
+                            e.getColumn(),
+                            e.getRow() + e.getHeight(),
+                            e.getColumn() + e.getWidth());
+                    BoundingBox obb = new BoundingBox(
+                            o.getRow(),
+                            o.getColumn(),
+                            o.getRow() + o.getHeight(),
+                            o.getColumn() + o.getWidth());
+                
+                    if (ebb.collidesWith(obb))
+                        System.out.println("oh bb a collision");
+                }));
+        
         entities.forEach(e -> e.tick(delta));
     }
 }

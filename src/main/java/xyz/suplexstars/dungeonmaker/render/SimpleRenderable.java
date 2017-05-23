@@ -34,13 +34,13 @@ public interface SimpleRenderable extends IRenderable {
         
         glBegin(GL_QUADS);
         {
-            glTexCoord2d(coords[0], coords[1]);
-            glVertex2d(c, r);
-            glTexCoord2d(coords[2], coords[1]);
-            glVertex2d(c + w, r);
-            glTexCoord2d(coords[2], coords[3]);
-            glVertex2d(c + w, r + h);
             glTexCoord2d(coords[0], coords[3]);
+            glVertex2d(c, r);
+            glTexCoord2d(coords[2], coords[3]);
+            glVertex2d(c + w, r);
+            glTexCoord2d(coords[2], coords[1]);
+            glVertex2d(c + w, r + h);
+            glTexCoord2d(coords[0], coords[1]);
             glVertex2d(c, r + h);
         }
         glEnd();

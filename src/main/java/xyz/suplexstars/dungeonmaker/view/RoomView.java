@@ -22,13 +22,16 @@ public class RoomView extends View {
         room.addObject(new Tree(), 6, 6);
         room.addObject(new Door(), 0, 3);
         
-        Door doorA = new Door(), doorB = new Door();
+        Door doorA = new Door(), doorB = new Door(), doorC = new Door();
         room.addObject(doorA, 1, 4);
         room.addObject(doorB, 1, 5);
+        room.addObject(doorC, 1, 6);
         doorA.addListener(doorB);
+        doorB.addListener(doorC);
         doorA.setActive(true);
     
         room.entities.add(new EntityBrute(new Location(4, 4)));
+        room.entities.add(new EntityPlayer(new Location(5, 3)));
     }
     
     @Override

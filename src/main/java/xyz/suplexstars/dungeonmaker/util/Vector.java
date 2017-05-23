@@ -37,4 +37,12 @@ public class Vector {
     }
     
     
+    public Vector add(Vector other) {
+        return Vector.fromRowCol(getRowComponent() + other.getRowComponent(),
+                getColComponent() + other.getColComponent());
+    }
+    
+    public Vector scale(double scale) {
+        return new Vector(magnitude * scale, direction);
+    }
 }

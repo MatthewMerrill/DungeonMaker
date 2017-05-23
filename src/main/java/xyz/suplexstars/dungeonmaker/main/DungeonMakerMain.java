@@ -7,6 +7,7 @@ import org.lwjgl.system.*;
 import xyz.suplexstars.dungeonmaker.DungeonMaker;
 
 import java.nio.*;
+import java.util.HashSet;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -19,6 +20,8 @@ public class DungeonMakerMain {
     // The window handle
     private long window;
     private DungeonMaker dungeonMaker;
+    
+    public static HashSet<Integer> pressedKeys = new HashSet<>();
     
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -59,6 +62,12 @@ public class DungeonMakerMain {
         glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
             if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
                 glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+            else {
+                if (action == GLFW_PRESS)
+                    pressedKeys.add(key);
+                else if (action == GLFW_RELEASE)
+                    pressedKeys.remove(key);
+            }
         });
         
         // Get the thread stack and push a new frame
@@ -119,7 +128,7 @@ public class DungeonMakerMain {
     
     
             glPushMatrix();
-            glOrtho(0, 200, 200, 0, 1, -1);
+            glOrtho(0, 200, 0, 200, 1, -1);
 //            glViewport(0, 0, 25, 25);
             
             // Poll for window events. The key callback above will only be

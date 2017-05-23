@@ -26,6 +26,12 @@ public abstract class Entity extends EventNode implements IRenderable, ITickable
     public double getColumn() {
         return getLocation().column;
     }
+    public double getWidth() {
+        return 1;
+    }
+    public double getHeight() {
+        return 1;
+    }
     
     public double getRotation() {
         return rotation;
