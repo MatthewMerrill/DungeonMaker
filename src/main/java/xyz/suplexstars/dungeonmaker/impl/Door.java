@@ -2,12 +2,6 @@ package xyz.suplexstars.dungeonmaker.impl;
 
 import xyz.suplexstars.dungeonmaker.api.DungeonObject;
 import xyz.suplexstars.dungeonmaker.api.ObjectBounds;
-import xyz.suplexstars.dungeonmaker.api.Trigger;
-import xyz.suplexstars.dungeonmaker.api.Triggerable;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.lwjgl.opengl.GL11.*;
 
